@@ -38,6 +38,16 @@ function Dashboard() {
       navigate("/login");
     }
   };
+  const fetch = async () => {
+    try {
+      const resData = await privetApi.get("/auth/getUsers");
+      setData(resData.data);
+    } catch (error) {
+      // setError(error.message); // Set the error message
+      console.log(error);
+      alert(error.message);
+    }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -50,6 +60,9 @@ function Dashboard() {
       <div className=" text-center mt-3">
         <Button variant="danger" onClick={handleLogout}>
           Logout
+        </Button>
+        <Button variant="danger" onClick={fetch}>
+          Fetch
         </Button>
       </div>
       <h1 className="text-center mb-4 text-gray">Register Data</h1>

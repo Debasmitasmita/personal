@@ -3,13 +3,17 @@ import { AuthContext } from '../../ContextApi/AuthContext';
 import {axiosPrivate as axios} from '../api/axios';
 const useRefreshToken = () => {
    
-    const { setAccessToken } = useContext(AuthContext);
+    const { setAccessToken,accessToken } = useContext(AuthContext);
+
     const refresh = async () => {
         var apiInfo = {}
         apiInfo['apiKey'] = "1234567"
         apiInfo['projectName'] = "projectOne"
-        const response = await axios.post('/auth/refresh',apiInfo, {
-            withCredentials: true
+        const response = await axios.post('/auth/refresh', apiInfo, {
+            withCredentials: true,
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
         });
         setAccessToken(prev => {
             console.log(prev);
